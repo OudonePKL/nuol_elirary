@@ -4,17 +4,27 @@ import "bootstrap/dist/css/bootstrap.min.css";
 // Bootstrap Bundle JS
 import "bootstrap/dist/js/bootstrap.bundle.min";
 
-
 import Home from "./components/Home";
-import SignUpForm from "./components/SignUpForm";
+import SignIn from "./components/SignIn";
+import SignUp from "./components/SignUp";
+import ForgotPassword from "./components/ForgotPassword";
+import ProductDetail from "./components/ProductDetail";
+import Dashboard from "./components/Admin/Dashboard";
 
 function App() {
   return (
     <>
       <BrowserRouter>
         <Routes>
+          {/* Admin page */}
+          <Route path="/dashboard" element={<Dashboard />} />
+          {/* User page */}
           <Route path="/" element={<Home />} />
-          <Route path="/signup" element={<SignUpForm />} />
+          <Route path="/detail" element={<ProductDetail />} />
+          {/* Authentications */}
+          <Route path="/signin" element={<SignIn />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
         </Routes>
       </BrowserRouter>
     </>
