@@ -30,38 +30,24 @@ class Book(models.Model):
         return self.name
     
 class Upload(models.Model):
-    STATUS_CHOICES = (
-        ("Uploading", "Uploading"),
-        ("Successful", "Successful"),
-        ("Filed", "Filed"),
-    )
     book = models.ForeignKey(Book, verbose_name="Book id",on_delete=models.CASCADE)
     user = models.ForeignKey(UserModel, verbose_name="User id",on_delete=models.CASCADE)
-    size = models.CharField(max_length=10, verbose_name="Book size")
-    status = models.CharField(max_length=50, verbose_name="Uploadind status", choices=STATUS_CHOICES, default="Uploading")
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         ordering = ('-id',)
 
     def __str__(self):
-        return self.status
+        return self.book.name
     
 class Download(models.Model):
-    STATUS_CHOICES = (
-        ("Uploading", "Uploading"),
-        ("Successful", "Successful"),
-        ("Filed", "Filed"),
-    )
     book = models.ForeignKey(Book, verbose_name="Book id",on_delete=models.CASCADE)
     user = models.ForeignKey(UserModel, verbose_name="User id",on_delete=models.CASCADE)
-    size = models.CharField(max_length=10, verbose_name="Book size")
-    status = models.CharField(max_length=50, verbose_name="Uploadind status", choices=STATUS_CHOICES, default="Uploading")
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         ordering = ('-id',)
 
     def __str__(self):
-        return self.status
+        return self.book.name
      

@@ -26,7 +26,6 @@ class UploadAdmin(admin.ModelAdmin):
     list_display = (
         "book",
         "user",
-        "size",
         "created_at"
     )
     search_fields = (
@@ -40,7 +39,6 @@ class DownloadAdmin(admin.ModelAdmin):
     list_display = (
         "book",
         "user",
-        "size",
         "created_at"
     )
     search_fields = (

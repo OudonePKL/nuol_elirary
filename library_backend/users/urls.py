@@ -1,9 +1,22 @@
 from django.urls import path
-from .views import UserCreateView, BlacklistTokenUpdateView
+from rest_framework_simplejwt.views import TokenRefreshView
+
+from users import views
 
 app_name = "users"
 
 urlpatterns = [
-    path("register/", UserCreateView.as_view(), name="create_user"),
-    path("logout/blacklist/", BlacklistTokenUpdateView.as_view(), name="blacklist"),
+    # join the membership
+    path("signup", views.SignupView.as_view(), name="signup"),
+    # Email Authentication
+    path("send-email", views.SendEmail.as_view(), name="send_email"),
+    path("check-email", views.CheckEmailView.as_view(), name="check_email"),
+    # log in
+    path("signin", views.LoginView.as_view(), name="signin"),
+    path("check-token", views.CheckToken.as_view(), name="CheckToken"),
+    # User information related
+    path("my-page", views.UserView.as_view(), name="my_page"),
+    path(
+        "my-page/profile", views.ChangeUserProfile.as_view(), name="ChangeUserProfile"
+    ),
 ]

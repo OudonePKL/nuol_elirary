@@ -1,27 +1,54 @@
 from django.db import models
+from datetime import timedelta
 from django.utils import timezone
-from django.utils.translation import gettext_lazy as _
-from django.contrib.auth.models import (
-    AbstractBaseUser,
-    BaseUserManager,
-)
+
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+
+class CheckEmailQuerySet(models.QuerySet):
+    """
+    Class required to delete authentication number
+    """
+
+    def expired(self):
+        return self.filter(expires_at__lt=timezone.now())
+
+    def delete_expired(self):
+        self.expired().delete()
+
+
+class CheckEmail(models.Model):
+    class Meta:
+        verbose_name_plural = "2. Authentication code management"
+
+    email = models.EmailField("Email for verification", max_length=100)
+    code = models.CharField("code for confirmation", max_length=20, unique=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    expires_at = models.DateTimeField()
+
+    objects = CheckEmailQuerySet.as_manager()
+
+    def __str__(self):
+        return self.email
+
+    def save(self, **kwargs):
+        self.expires_at = timezone.now() + timedelta(minutes=3)
+        super().save(**kwargs)
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, email, password=None):
+    def create_user(self, email, password=None, name=None):
         if not email:
             raise ValueError("Users must have an email")
 
-        user = self.model(email=email)
+        user = self.model(email=email, name=name)
         user.set_password(password)
         user.save(using=self._db)
         return user
 
     def create_superuser(self, email, password=None):
         user = self.create_user(email=email, password=password)
-        user.is_active = True
-        user.is_staff = True
-        user.is_superuser = True
+        user.is_admin = True
+        user.is_director = True
         user.save(using=self._db)
         return user
 
@@ -30,18 +57,20 @@ class UserModel(AbstractBaseUser):
     class Meta:
         verbose_name_plural = "1. User information"
 
-    email = models.EmailField(max_length=100, unique=True)
-    first_name = models.CharField(max_length=150, blank=True)
-    last_name = models.CharField(max_length=150, blank=True)
-    phone = models.CharField(max_length=20, blank=True)
-    password = models.CharField(max_length=128)
-    start_date = models.DateTimeField(default=timezone.now)
+    email = models.EmailField(verbose_name="Email Address", max_length=100, unique=True)
+    name = models.CharField(
+        verbose_name="name", max_length=30, null=True, blank=True
+    )
+    profile_image = models.FileField(
+        verbose_name="profile image", null=True, blank=True, upload_to="profile"
+    )
+    password = models.CharField(verbose_name="password", max_length=128)
 
-    is_superuser = models.BooleanField(default=False)
+    is_director = models.BooleanField(default=False, verbose_name="Director")
 
     is_active = models.BooleanField(default=True)
 
-    is_staff = models.BooleanField(default=False)
+    is_admin = models.BooleanField(default=False, verbose_name="Administrator")
 
     USERNAME_FIELD = "email"
 
@@ -57,3 +86,9 @@ class UserModel(AbstractBaseUser):
 
     def has_module_perms(self, app_label):
         return True
+
+    @property
+    def is_staff(self):
+        return self.is_admin
+
+
