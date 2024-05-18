@@ -1,7 +1,32 @@
 import Header from "./Header";
 import Footer from "./Footer";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 function Home() {
+  const [books, set_books] = useState([]);
+
+  useEffect(() => {
+    let config = {
+      method: "get",
+      maxBodyLength: Infinity,
+      url: "http://127.0.0.1:8000/library/books",
+      headers: {},
+    };
+
+    axios
+      .request(config)
+      .then((response) => {
+        // console.log(JSON.stringify(response.data));
+        set_books(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+  console.log(books);
+
   return (
     <div>
       {/* Navigation */}
@@ -22,311 +47,89 @@ function Home() {
       <section className="py-5">
         <div className="container px-4 px-lg-5 mt-5">
           <div className="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-            <div className="col mb-5">
-              <div className="card h-100">
-                {/* <!-- Product image--> */}
-                <img
-                  className="card-img-top"
-                  src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
-                  alt="..."
-                />
-                {/* <!-- Product details--> */}
-                <div className="card-body p-4">
-                  <div className="text-center">
-                    {/* <!-- Product name--> */}
-                    <h5 className="fw-bolder">Fancy Product</h5>
-                    {/* <!-- Product price--> */}
-                    $40.00 - $80.00
-                  </div>
-                </div>
-                {/* <!-- Product actions--> */}
-                <div className="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                  <div className="text-center">
-                    <a className="btn btn-outline-dark mt-auto" href="#">
-                    View Details
-                    </a>
-                  </div>
-                </div>
+            {books.length <= 0 ? (
+              <div>
+                <h1>No books</h1>
               </div>
-            </div>
-            <div className="col mb-5">
-              <div className="card h-100">
-                {/* <!-- Sale badge--> */}
-                <div
-                  className="badge bg-dark text-white position-absolute"
-                  style={{
-                    position: "absolute",
-                    top: "0.5rem",
-                    right: "0.5rem",
-                    backgroundColor: "#343a40", // Dark background color
-                    color: "#fff", // White text color
-                    padding: "0.25rem 0.5rem", // Padding
-                    borderRadius: "0.25rem", // Border radius
-                  }}
-                >
-                  Sale
-                </div>
-                {/* <!-- Product image--> */}
-                <img
-                  className="card-img-top"
-                  src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
-                  alt="..."
-                />
-                {/* <!-- Product details--> */}
-                <div className="card-body p-4">
-                  <div className="text-center">
-                    {/* <!-- Product name--> */}
-                    <h5 className="fw-bolder">Special Item</h5>
-                    {/* <!-- Product reviews--> */}
-                    <div className="d-flex justify-content-center small text-warning mb-2">
-                      <div className="bi-star-fill"></div>
-                      <div className="bi-star-fill"></div>
-                      <div className="bi-star-fill"></div>
-                      <div className="bi-star-fill"></div>
-                      <div className="bi-star-fill"></div>
+            ) : (
+              books.map((book) => {
+                console.log(book.name);
+                // <p>{book.name}</p>
+                // <div className="col mb-5">
+                //   <div className="card h-100">
+                //     {/* <!-- Product image--> */}
+                //     <img
+                //       className="card-img-top"
+                //       src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
+                //       alt="..."
+                //     />
+                //     {/* <!-- Product details--> */}
+                //     <div className="card-body p-4">
+                //       <div className="text-center">
+                //         {/* <!-- Product name--> */}
+                //         <h5 className="fw-bolder">{book.name}</h5>
+                //         {/* <!-- Product price--> */}
+                //         $40.00 - $80.00
+                //       </div>
+                //     </div>
+                //     {/* <!-- Product actions--> */}
+                //     <div className="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                //       <div className="text-center">
+                //         <a className="btn btn-outline-dark mt-auto" href="#">
+                //           View Details
+                //         </a>
+                //       </div>
+                //     </div>
+                //   </div>
+                // </div>;
+              })
+            )}
+
+            {books.length === 0 ? (
+              <p className="no-reviews-message">No Order</p>
+            ) : (
+              books.map((book) => (
+                // <div key={item.id} className="box_item_order">
+                //   <div className="box_item_order_text">
+                //     <p>ID: {item.id}</p>
+                //     <p>Status: {item.status}</p>
+                //   </div>
+                //   <div className="txtheadeproductorder">
+                //     <p>
+                //       Date Time: {new Date(item.created_at).toLocaleString()}
+                //     </p>
+                //   </div>
+                // </div>
+                <div className="col mb-5" key={book.id}>
+                  <div className="card h-100">
+                    {/* <!-- Product image--> */}
+                    <img
+                      className="card-img-top h-100"
+                      src={
+                        book.cover ||
+                        "https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
+                      }
+                      alt="..."
+                    />
+                    {/* <!-- Product details--> */}
+                    <div className="card-body p-4">
+                      <div className="text-center">
+                        {/* <!-- Product name--> */}
+                        <h5 className="fw-bolder">{book.name}</h5>
+                      </div>
                     </div>
-                    {/* <!-- Product price--> */}
-                    <span className="text-muted text-decoration-line-through">
-                      $20.00
-                    </span>
-                    $18.00
-                  </div>
-                </div>
-                {/* <!-- Product actions--> */}
-                <div className="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                  <div className="text-center">
-                    <a className="btn btn-outline-dark mt-auto" href="#">
-                      View Details
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col mb-5">
-              <div className="card h-100">
-                {/* <!-- Sale badge--> */}
-                <div
-                  className="badge bg-dark text-white position-absolute"
-                  style={{
-                    top: "0.5rem",
-                    right: "0.5rem",
-                  }}
-                >
-                  Sale
-                </div>
-                {/* <!-- Product image--> */}
-                <img
-                  className="card-img-top"
-                  src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
-                  alt="..."
-                />
-                {/* <!-- Product details--> */}
-                <div className="card-body p-4">
-                  <div className="text-center">
-                    {/* <!-- Product name--> */}
-                    <h5 className="fw-bolder">Sale Item</h5>
-                    {/* <!-- Product price--> */}
-                    <span className="text-muted text-decoration-line-through">
-                      $50.00
-                    </span>
-                    $25.00
-                  </div>
-                </div>
-                {/* <!-- Product actions--> */}
-                <div className="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                  <div className="text-center">
-                    <a className="btn btn-outline-dark mt-auto" href="#">
-                      View Details
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col mb-5">
-              <div className="card h-100">
-                {/* <!-- Product image--> */}
-                <img
-                  className="card-img-top"
-                  src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
-                  alt="..."
-                />
-                {/* <!-- Product details--> */}
-                <div className="card-body p-4">
-                  <div className="text-center">
-                    {/* <!-- Product name--> */}
-                    <h5 className="fw-bolder">Popular Item</h5>
-                    {/* <!-- Product reviews--> */}
-                    <div className="d-flex justify-content-center small text-warning mb-2">
-                      <div className="bi-star-fill"></div>
-                      <div className="bi-star-fill"></div>
-                      <div className="bi-star-fill"></div>
-                      <div className="bi-star-fill"></div>
-                      <div className="bi-star-fill"></div>
+                    {/* <!-- Product actions--> */}
+                    <div className="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                      <div className="text-center">
+                        <a className="btn btn-outline-dark mt-auto" href={`/detail/${book.id}`}>
+                          View Details
+                        </a>
+                      </div>
                     </div>
-                    {/* <!-- Product price--> */}
-                    $40.00
                   </div>
                 </div>
-                {/* <!-- Product actions--> */}
-                <div className="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                  <div className="text-center">
-                    <a className="btn btn-outline-dark mt-auto" href="#">
-                      View Details
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col mb-5">
-              <div className="card h-100">
-                {/* <!-- Sale badge--> */}
-                <div
-                  className="badge bg-dark text-white position-absolute"
-                  style={{
-                    top: "0.5rem",
-                    right: "0.5rem",
-                  }}
-                >
-                  Sale
-                </div>
-                {/* <!-- Product image--> */}
-                <img
-                  className="card-img-top"
-                  src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
-                  alt="..."
-                />
-                {/* <!-- Product details--> */}
-                <div className="card-body p-4">
-                  <div className="text-center">
-                    {/* <!-- Product name--> */}
-                    <h5 className="fw-bolder">Sale Item</h5>
-                    {/* <!-- Product price--> */}
-                    <span className="text-muted text-decoration-line-through">
-                      $50.00
-                    </span>
-                    $25.00
-                  </div>
-                </div>
-                {/* <!-- Product actions--> */}
-                <div className="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                  <div className="text-center">
-                    <a className="btn btn-outline-dark mt-auto" href="#">
-                      View Details
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col mb-5">
-              <div className="card h-100">
-                {/* <!-- Product image--> */}
-                <img
-                  className="card-img-top"
-                  src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
-                  alt="..."
-                />
-                {/* <!-- Product details--> */}
-                <div className="card-body p-4">
-                  <div className="text-center">
-                    {/* <!-- Product name--> */}
-                    <h5 className="fw-bolder">Fancy Product</h5>
-                    {/* <!-- Product price--> */}
-                    $120.00 - $280.00
-                  </div>
-                </div>
-                {/* <!-- Product actions--> */}
-                <div className="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                  <div className="text-center">
-                    <a className="btn btn-outline-dark mt-auto" href="#">
-                      View options
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col mb-5">
-              <div className="card h-100">
-                {/* <!-- Sale badge--> */}
-                <div
-                  className="badge bg-dark text-white position-absolute"
-                  style={{
-                    top: "0.5rem",
-                    right: "0.5rem",
-                  }}
-                >
-                  Sale
-                </div>
-                {/* <!-- Product image--> */}
-                <img
-                  className="card-img-top"
-                  src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
-                  alt="..."
-                />
-                {/* <!-- Product details--> */}
-                <div className="card-body p-4">
-                  <div className="text-center">
-                    {/* <!-- Product name--> */}
-                    <h5 className="fw-bolder">Special Item</h5>
-                    {/* <!-- Product reviews--> */}
-                    <div className="d-flex justify-content-center small text-warning mb-2">
-                      <div className="bi-star-fill"></div>
-                      <div className="bi-star-fill"></div>
-                      <div className="bi-star-fill"></div>
-                      <div className="bi-star-fill"></div>
-                      <div className="bi-star-fill"></div>
-                    </div>
-                    {/* <!-- Product price--> */}
-                    <span className="text-muted text-decoration-line-through">
-                      $20.00
-                    </span>
-                    $18.00
-                  </div>
-                </div>
-                {/* <!-- Product actions--> */}
-                <div className="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                  <div className="text-center">
-                    <a className="btn btn-outline-dark mt-auto" href="#">
-                      View Details
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col mb-5">
-              <div className="card h-100">
-                {/* <!-- Product image--> */}
-                <img
-                  className="card-img-top"
-                  src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
-                  alt="..."
-                />
-                {/* <!-- Product details--> */}
-                <div className="card-body p-4">
-                  <div className="text-center">
-                    {/* <!-- Product name--> */}
-                    <h5 className="fw-bolder">Popular Item</h5>
-                    {/* <!-- Product reviews--> */}
-                    <div className="d-flex justify-content-center small text-warning mb-2">
-                      <div className="bi-star-fill"></div>
-                      <div className="bi-star-fill"></div>
-                      <div className="bi-star-fill"></div>
-                      <div className="bi-star-fill"></div>
-                      <div className="bi-star-fill"></div>
-                    </div>
-                    {/* <!-- Product price--> */}
-                    $40.00
-                  </div>
-                </div>
-                {/* <!-- Product actions--> */}
-                <div className="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                  <div className="text-center">
-                    <a className="btn btn-outline-dark mt-auto" href="#">
-                      View Details
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
+              ))
+            )}
           </div>
         </div>
       </section>

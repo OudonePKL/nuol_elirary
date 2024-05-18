@@ -1,76 +1,42 @@
-from rest_framework import generics
+from rest_framework import viewsets
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from django.http import FileResponse
 from .models import Category, Book, Upload, Download
-from .serializers import CategorySerializer, BookSerializer, UploadSerializer, DownloadSerializer, ManageBookSerializer, ManageDownloadSerializer, ManageUploadSerializer
+from .serializers import CategorySerializer, BookSerializer, UploadSerializer, DownloadSerializer
+from users.models import UserModel
+from rest_framework.permissions import IsAuthenticated
 
-class CategoryListCreate(generics.ListCreateAPIView):
+class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
 
-class CategoryRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Category.objects.all()
-    serializer_class = CategorySerializer
-
-# Book managements
-class BookList(generics.ListAPIView):
+class BookViewSet(viewsets.ModelViewSet):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
 
-class BookDetail(generics.RetrieveAPIView):
-    queryset = Book.objects.all()
-    serializer_class = BookSerializer
+    def perform_create(self, serializer):
+        book = serializer.save()
+        Upload.objects.create(book=book, user=self.request.user)
 
-class BookCreate(generics.CreateAPIView):
-    queryset = Book.objects.all()
-    serializer_class = ManageBookSerializer
+    @action(detail=True, methods=['get'], url_path='download-pdf')
+    def download_pdf(self, request, pk=None):
+        book = self.get_object()
+        user = request.user
 
-class BookUpdate(generics.UpdateAPIView):
-    queryset = Book.objects.all()
-    serializer_class = ManageBookSerializer
+        # Create a Download record
+        Download.objects.create(book=book, user=user)
 
-class BookDelete(generics.DestroyAPIView):
-    queryset = Book.objects.all()
-    serializer_class = ManageBookSerializer
+        # Serve the PDF file
+        pdf_path = book.pdf.path
+        response = FileResponse(open(pdf_path, 'rb'), content_type='application/pdf')
+        response['Content-Disposition'] = f'attachment; filename="{book.name}.pdf"'
+        return response
 
+# class UploadViewSet(viewsets.ModelViewSet):
+#     queryset = Upload.objects.all()
+#     serializer_class = UploadSerializer
 
-# Upload Mangement
-class UploadList(generics.ListAPIView):
-    queryset = Upload.objects.all()
-    serializer_class = UploadSerializer
-
-class UploadDetail(generics.RetrieveAPIView):
-    queryset = Upload.objects.all()
-    serializer_class = UploadSerializer
-
-class UploadCreate(generics.CreateAPIView):
-    queryset = Upload.objects.all()
-    serializer_class = ManageUploadSerializer
-
-class UploadUpdate(generics.UpdateAPIView):
-    queryset = Upload.objects.all()
-    serializer_class = ManageUploadSerializer
-
-class UploadDelete(generics.DestroyAPIView):
-    queryset = Upload.objects.all()
-    serializer_class = ManageUploadSerializer
-
-
-# Upload Mangement
-class DownloadList(generics.ListAPIView):
-    queryset = Download.objects.all()
-    serializer_class = DownloadSerializer
-
-class DownloadDetail(generics.RetrieveAPIView):
-    queryset = Download.objects.all()
-    serializer_class = DownloadSerializer
-
-class DownloadCreate(generics.CreateAPIView):
-    queryset = Download.objects.all()
-    serializer_class = ManageDownloadSerializer
-
-class DownloadUpdate(generics.UpdateAPIView):
-    queryset = Download.objects.all()
-    serializer_class = ManageDownloadSerializer
-
-class DownloadDelete(generics.DestroyAPIView):
-    queryset = Download.objects.all()
-    serializer_class = ManageDownloadSerializer
+# class DownloadViewSet(viewsets.ModelViewSet):
+#     queryset = Download.objects.all()
+#     serializer_class = DownloadSerializer
