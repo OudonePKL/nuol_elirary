@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { Worker, Viewer } from "@react-pdf-viewer/core";
-import "@react-pdf-viewer/core/lib/styles/index.css";
-import { defaultLayoutPlugin } from "@react-pdf-viewer/default-layout";
-import "@react-pdf-viewer/default-layout/lib/styles/index.css";
-import axios from "axios";
-import { GlobalWorkerOptions } from "pdfjs-dist/build/pdf";
-import { useParams, useNavigate } from "react-router-dom";
-import "./BookReader.css"; // Create and import a CSS file for custom styles
+import React, { useState, useEffect } from 'react';
+import { Worker, Viewer } from '@react-pdf-viewer/core';
+import '@react-pdf-viewer/core/lib/styles/index.css';
+import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
+import '@react-pdf-viewer/default-layout/lib/styles/index.css';
+import axios from 'axios';
+import { GlobalWorkerOptions } from 'pdfjs-dist/build/pdf';
+import { useParams, useNavigate } from 'react-router-dom';
+import './BookReader.css'; // Create and import a CSS file for custom styles
 
 const BookReader = () => {
   const { id: book_id } = useParams(); // Destructure and rename `id` to `book_id`
@@ -19,21 +19,12 @@ const BookReader = () => {
   useEffect(() => {
     const fetchPDF = async () => {
       try {
-        const token = localStorage.getItem("token");
-        if (!token) {
-          // Store the intended destination before navigating to signin
-          localStorage.setItem('intendedDestination', window.location.pathname);
-          // If token is missing, navigate to signin page
-          navigate("/signin");
-          return;
-        }
-
         const response = await axios.get(
           `http://127.0.0.1:8000/library/books/${book_id}/download-pdf/`,
           {
-            responseType: "blob",
+            responseType: 'blob',
             headers: {
-              Authorization: `Bearer ${token}`, // Adjust according to your auth mechanism
+              Authorization: `Bearer ${localStorage.getItem('token')}`, // Adjust according to your auth mechanism
             },
           }
         );
@@ -43,13 +34,13 @@ const BookReader = () => {
         setPdfUrl(url);
         setLoading(false);
       } catch (error) {
-        console.error("Error fetching PDF:", error);
+        console.error('Error fetching PDF:', error);
         setLoading(false);
       }
     };
 
     fetchPDF();
-  }, [book_id, navigate]);
+  }, [book_id]);
 
   if (loading) {
     return <div>Loading PDF...</div>;

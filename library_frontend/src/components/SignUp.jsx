@@ -39,7 +39,7 @@ function SignUp() {
           id="form5"
           type="password"
         />
-        <MDBBtn className="mb-4 btn-dark">Sign Up</MDBBtn>
+        <MDBBtn className="mb-4 btn-primary">Sign Up</MDBBtn>
         <div className="text-center">
           <p>
             Already have an account? <a href="/signin">Log in</a>

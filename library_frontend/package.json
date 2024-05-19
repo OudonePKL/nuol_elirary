@@ -15,12 +15,16 @@
     "@mui/icons-material": "^5.15.16",
     "@mui/material": "^5.15.16",
     "@mui/styled-engine-sc": "^6.0.0-alpha.18",
+    "@react-pdf-viewer/core": "^3.12.0",
+    "@react-pdf-viewer/default-layout": "^3.12.0",
+    "@react-pdf-viewer/print": "^3.12.0",
     "axios": "^1.6.8",
     "bootstrap": "^5.3.3",
     "mdb-react-ui-kit": "^8.0.0",
+    "pdfjs-dist": "^3.11.174",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.23.0",
+    "react-router-dom": "^6.23.1",
     "styled-components": "^6.1.9"
   },
   "devDependencies": {

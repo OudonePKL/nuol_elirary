@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { Worker, Viewer, PdfJs } from '@react-pdf-viewer/core';
+import { useState, useEffect } from 'react';
+import { Worker, Viewer } from '@react-pdf-viewer/core';
 import '@react-pdf-viewer/core/lib/styles/index.css';
 import '@react-pdf-viewer/default-layout/lib/styles/index.css';
 import axios from 'axios';
+import { GlobalWorkerOptions } from 'pdfjs-dist';
 
 const PDFViewer = ({ bookId }) => {
   const [pdfUrl, setPdfUrl] = useState(null);
@@ -11,7 +12,7 @@ const PDFViewer = ({ bookId }) => {
   useEffect(() => {
     const fetchPDF = async () => {
       try {
-        const response = await axios.get(`http://127.0.0.1:8000/api/books/${bookId}/download-pdf/`, {
+        const response = await axios.get(`http://127.0.0.1:8000/library/books/${bookId}/download-pdf/`, {
           responseType: 'blob',
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`, // Adjust according to your auth mechanism
@@ -35,9 +36,16 @@ const PDFViewer = ({ bookId }) => {
     return <div>Loading PDF...</div>;
   }
 
+  if (!pdfUrl) {
+    return <div>Error loading PDF</div>;
+  }
+
+  // Set the worker URL
+  GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
+
   return (
     <div style={{ height: '750px' }}>
-      <Worker workerUrl={`https://unpkg.com/pdfjs-dist@${PdfJs.version}/build/pdf.worker.min.js`}>
+      <Worker workerUrl={GlobalWorkerOptions.workerSrc}>
         <Viewer fileUrl={pdfUrl} />
       </Worker>
     </div>

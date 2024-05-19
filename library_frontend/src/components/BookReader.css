@@ -1,0 +1,33 @@
+/* BookReader.css */
+.book-reader-container {
+    padding: 16px;
+    max-width: 100%;
+  }
+  
+  .back-button {
+    margin-bottom: 16px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .pdf-viewer-wrapper {
+    height: 100vh; /* Use full viewport height */
+    width: 100%;
+    max-width: 100%;
+    position: relative;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .pdf-viewer-wrapper {
+      height: 80vh; /* Slightly reduce height for tablets */
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .pdf-viewer-wrapper {
+      height: 70vh; /* Further reduce height for phones */
+    }
+  }
+  

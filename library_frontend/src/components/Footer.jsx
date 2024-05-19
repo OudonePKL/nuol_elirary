@@ -3,7 +3,7 @@
 function Footer() {
   return (
     <div>
-      <footer className="py-5 bg-dark">
+      <footer className="py-5 bg-primary">
         <div className="container">
           <p className="m-0 text-center text-white">
             Copyright &copy; E-Library 2024

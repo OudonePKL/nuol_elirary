@@ -84,7 +84,7 @@ function SignIn() {
           <a href="/forgot-password">Forgot password?</a>
         </div>
         <MDBBtn
-          className="mb-4 btn-dark"
+          className="mb-4 btn-primary"
           onClick={() => {
             Login();
           }}

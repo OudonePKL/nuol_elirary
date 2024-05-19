@@ -40,14 +40,14 @@ function Header() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
-              <button className="btn btn-outline-dark me-5" type="submit">
+              <button className="btn btn-outline-primary me-5" type="submit">
                 Search
               </button>
             </form>
           </div>
           <form className="d-flex">
             <button
-              className="btn btn-dark me-2"
+              className="btn btn-primary me-2"
               type="submit"
               onClick={() => {
                 navigate("/signin");

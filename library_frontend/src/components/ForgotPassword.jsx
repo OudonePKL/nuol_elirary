@@ -21,7 +21,7 @@ function ForgotPassword() {
           id="form2"
           type="password"
         />
-        <MDBBtn className="mb-4 btn-dark">Submit</MDBBtn>
+        <MDBBtn className="mb-4 btn-primary">Submit</MDBBtn>
         <div className="text-center">
           <div
             className="d-flex justify-content-between mx-auto"

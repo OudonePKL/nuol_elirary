@@ -11,6 +11,7 @@ import ForgotPassword from "./components/ForgotPassword";
 import ProductDetail from "./components/ProductDetail";
 import Dashboard from "./components/Admin/Dashboard";
 import UploadBook from "./components/UploadBook";
+import BookReader from "./components/BookReader";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           {/* Admin page */}
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/upload-book" element={<UploadBook />} />
+          <Route path="/detail/:id/read" element={<BookReader />} />
           {/* User page */}
           <Route path="/" element={<Home />} />
           <Route path="/detail/:id" element={<ProductDetail />} />
