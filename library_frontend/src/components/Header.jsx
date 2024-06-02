@@ -2,14 +2,24 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Header() {
+  const user = localStorage.getItem("user");
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
+
+  console.log(user);
 
   const handleSearch = (e) => {
     e.preventDefault();
     // Here you can implement your search logic, e.g., redirect to search results page or update state
     console.log("Search for:", searchQuery);
   };
+
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/");
+    return;
+  };
+
   return (
     <div>
       {/* Navigation */}
@@ -46,21 +56,31 @@ function Header() {
             </form>
           </div>
           <form className="d-flex">
-            <button
-              className="btn btn-primary me-2"
-              type="submit"
-              onClick={() => {
-                navigate("/signin");
-              }}
-            >
-              <i className="bi-cart-fill me-1"></i>
-              Log in
-            </button>
-
-            {/* <button className="btn btn-dark" type="submit">
+            {!user && (
+              <button
+                className="btn btn-primary me-2"
+                type="submit"
+                onClick={() => {
+                  navigate("/signin");
+                }}
+              >
                 <i className="bi-cart-fill me-1"></i>
-                Hello, User name
-              </button> */}
+                Log in
+              </button>
+            )}
+
+            {user && (
+              <button
+                className="btn btn-primary"
+                type="submit"
+                onClick={() => {
+                  handleLogout();
+                }}
+              >
+                <i className="bi-cart-fill me-1"></i>
+                Log out
+              </button>
+            )}
           </form>
         </div>
       </nav>
