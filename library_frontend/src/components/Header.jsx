@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+
+import logo3 from "./Admin/img/logo3.png";
 
 import {
   Navbar,
@@ -11,9 +13,16 @@ import {
 } from "react-bootstrap";
 
 function Header({ isLoggedIn, handleLogin, handleLogout, handleProfile }) {
-  // const user = localStorage.getItem("user");
-  // const navigate = useNavigate();
-  // const [searchQuery, setSearchQuery] = useState("");
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+  const [isAdmin, setIsAdmin] = useState(false);
+  const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState("");
+
+  useEffect(() => {
+    setIsAdmin(!!user.is_admin);
+  }, []);
+
+  console.log(isAdmin);
 
   // console.log(user);
 
@@ -95,15 +104,14 @@ function Header({ isLoggedIn, handleLogin, handleLogout, handleProfile }) {
       </nav> */}
 
       <Navbar bg="light" expand="lg" className="p-3 shadow-sm">
-        <Navbar.Brand href="#home" className="d-flex align-items-center">
+        <Navbar.Brand href="/" className="d-flex align-items-center">
           <img
-            src="path/to/logo.png"
-            width="40"
-            height="40"
+            src={logo3}
+            width="100px"
             className="d-inline-block align-top mr-2"
             alt="Logo"
           />
-          <span className="font-weight-bold">MyWebsite</span>
+          {/* <span className="font-weight-bold">MyWebsite</span> */}
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse
@@ -111,26 +119,24 @@ function Header({ isLoggedIn, handleLogin, handleLogout, handleProfile }) {
           className="justify-content-between"
         >
           <Nav className="mr-auto">
-            <Nav.Link href="#home" className="mx-2">
+            <Nav.Link href="/" className="mx-2">
               Home
             </Nav.Link>
             <Nav.Link href="#link" className="mx-2">
-              Link
+              About us
             </Nav.Link>
             <NavDropdown
-              title="Dropdown"
+              title="Category"
               id="basic-nav-dropdown"
               className="mx-2"
             >
-              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                Another action
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-              <NavDropdown.Divider />
+              <NavDropdown.Item href="#action/3.1">Technology</NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.2">Business</NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.3">Health</NavDropdown.Item>
+              {/* <NavDropdown.Divider />
               <NavDropdown.Item href="#action/3.4">
                 Separated link
-              </NavDropdown.Item>
+              </NavDropdown.Item> */}
             </NavDropdown>
           </Nav>
           <Form inline className="d-flex">
@@ -139,21 +145,35 @@ function Header({ isLoggedIn, handleLogin, handleLogout, handleProfile }) {
               Search
             </Button>
           </Form>
-          {isLoggedIn ? (
+          {user ? (
             <>
-              <Button
-                variant="outline-primary"
-                className="mr-2"
-                onClick={handleProfile}
-              >
-                Profile
-              </Button>
-              <Button variant="outline-danger" onClick={handleLogout}>
+              {isAdmin === true ? (
+                <Button
+                  variant="outline-primary"
+                  className="mr-2"
+                  onClick={() => navigate("/dashboard")}
+                >
+                  Dashboard
+                </Button>
+              ) : (
+                <Button
+                  variant="outline-primary"
+                  className="mr-2"
+                  onClick={() => navigate("/profile")}
+                >
+                  Profile
+                </Button>
+              )}
+
+              {/* <Button variant="outline-danger" onClick={handleLogout}>
                 Logout
-              </Button>
+              </Button> */}
             </>
           ) : (
-            <Button variant="outline-primary" onClick={handleLogin}>
+            <Button
+              variant="outline-primary"
+              onClick={() => navigate("/signin")}
+            >
               Login
             </Button>
           )}

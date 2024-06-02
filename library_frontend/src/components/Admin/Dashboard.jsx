@@ -82,22 +82,11 @@ function Dashboard() {
 
         {/* <!-- Nav Item - Charts --> */}
         <li className="nav-item">
-          <a className="nav-link" href="charts.html">
+          <a className="nav-link" href="#">
             <i className="fas fa-fw fa-chart-area"></i>
             <span>Charts</span>
           </a>
         </li>
-
-        {/* <!-- Divider --> */}
-        <hr className="sidebar-divider d-none d-md-block" />
-
-        {/* <!-- Sidebar Toggler (Sidebar) --> */}
-        <div className="text-center d-none d-md-inline">
-          <button
-            className="rounded-circle border-0"
-            id="sidebarToggle"
-          ></button>
-        </div>
       </ul>
       {/* <!-- End of Sidebar --> */}
 
@@ -192,7 +181,7 @@ function Dashboard() {
                   className="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                   aria-labelledby="alertsDropdown"
                 >
-                  <h6 className="dropdown-header">Alerts Center</h6>
+                  <h6 className="dropdown-header">New user</h6>
                   <a
                     className="dropdown-item d-flex align-items-center"
                     href="#"
@@ -330,14 +319,14 @@ function Dashboard() {
                     <div className="row no-gutters align-items-center">
                       <div className="col mr-2">
                         <div className="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                          Earnings (Monthly)
+                          Employee
                         </div>
                         <div className="h5 mb-0 font-weight-bold text-gray-800">
-                          $40,000
+                          9
                         </div>
                       </div>
                       <div className="col-auto">
-                        <i className="fas fa-calendar fa-2x text-gray-300"></i>
+                        <i className="fas fa-user fa-2x text-gray-300"></i>
                       </div>
                     </div>
                   </div>
@@ -351,14 +340,14 @@ function Dashboard() {
                     <div className="row no-gutters align-items-center">
                       <div className="col mr-2">
                         <div className="text-xs font-weight-bold text-success text-uppercase mb-1">
-                          Earnings (Annual)
+                          Member
                         </div>
                         <div className="h5 mb-0 font-weight-bold text-gray-800">
-                          $215,000
+                          555
                         </div>
                       </div>
                       <div className="col-auto">
-                        <i className="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                        <i className="fas fa-user fa-2x text-gray-300"></i>
                       </div>
                     </div>
                   </div>
@@ -372,12 +361,12 @@ function Dashboard() {
                     <div className="row no-gutters align-items-center">
                       <div className="col mr-2">
                         <div className="text-xs font-weight-bold text-info text-uppercase mb-1">
-                          Tasks
+                          Category
                         </div>
                         <div className="row no-gutters align-items-center">
                           <div className="col-auto">
                             <div className="h5 mb-0 mr-3 font-weight-bold text-gray-800">
-                              50%
+                              9
                             </div>
                           </div>
                           <div className="col">
@@ -395,7 +384,7 @@ function Dashboard() {
                         </div>
                       </div>
                       <div className="col-auto">
-                        <i className="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                        <i className="fas fa-box fa-2x text-gray-300"></i>
                       </div>
                     </div>
                   </div>
@@ -409,14 +398,14 @@ function Dashboard() {
                     <div className="row no-gutters align-items-center">
                       <div className="col mr-2">
                         <div className="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                          Pending Requests
+                          Book
                         </div>
                         <div className="h5 mb-0 font-weight-bold text-gray-800">
-                          18
+                          999
                         </div>
                       </div>
                       <div className="col-auto">
-                        <i className="fas fa-comments fa-2x text-gray-300"></i>
+                        <i className="fas fa-book fa-2x text-gray-300"></i>
                       </div>
                     </div>
                   </div>
