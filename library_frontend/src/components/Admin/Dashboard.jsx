@@ -10,6 +10,8 @@ import "./vendor/jquery-easing/jquery.easing.min.js";
 // Custom scripts for all pages
 import "./js/sb-admin-2.min.js";
 
+import undraw_profile from "./img/undraw_profile.svg";
+
 function Dashboard() {
   return (
     // <!-- Page Wrapper -->
@@ -269,7 +271,7 @@ function Dashboard() {
                   </span>
                   <img
                     className="img-profile rounded-circle"
-                    src="img/undraw_profile.svg"
+                    src={undraw_profile}
                   />
                 </a>
                 {/* <!-- Dropdown - User Information --> */}
