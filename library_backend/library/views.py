@@ -1,4 +1,4 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, status, filters, generics
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.http import FileResponse
@@ -10,10 +10,14 @@ from rest_framework.permissions import IsAuthenticated
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+    
 
 class BookViewSet(viewsets.ModelViewSet):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
+    filter_backends = [filters.SearchFilter]
+    filterset_fields = ['category__name']
+    search_fields = ["name", "publication_date", "category__name"]
 
     def perform_create(self, serializer):
         book = serializer.save()
@@ -32,6 +36,7 @@ class BookViewSet(viewsets.ModelViewSet):
         response = FileResponse(open(pdf_path, 'rb'), content_type='application/pdf')
         response['Content-Disposition'] = f'attachment; filename="{book.name}.pdf"'
         return response
+
 
 # class UploadViewSet(viewsets.ModelViewSet):
 #     queryset = Upload.objects.all()

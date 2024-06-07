@@ -7,10 +7,21 @@ import { Container, Row, Col, Card } from "react-bootstrap";
 import "./styles.css";
 import "./Admin/css/bootstrap.min.css";
 
-function Home() {
+function Search() {
   const [books, setBooks] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const searchParam = urlParams.get("search");
+
+  const [search, setSearch] = useState(searchParam || "");
+
+  useEffect(() => {
+    if (searchParam) {
+      setSearch(searchParam);
+    }
+  }, [searchParam]);
 
   useEffect(() => {
     const fatchBooks = async () => {
@@ -18,7 +29,7 @@ function Home() {
         let config = {
           method: "get",
           maxBodyLength: Infinity,
-          url: import.meta.env.VITE_API + "/library/books",
+          url: import.meta.env.VITE_API + `/library/books/?search=${search}`,
           headers: {},
         };
         const response = await axios.request(config);
@@ -31,7 +42,7 @@ function Home() {
     };
 
     fatchBooks();
-  }, []);
+  }, [search]);
 
   return (
     <div>
@@ -55,6 +66,8 @@ function Home() {
         <Row>
           {isLoading ? (
             <div>Loading...</div>
+          ) : books.length < 1 ? (
+            <h1>No Book</h1>
           ) : (
             books.map((book, index) => (
               <Col
@@ -115,10 +128,9 @@ function Home() {
           </nav>
         </div>
       </div>
-
       <Footer />
     </div>
   );
 }
 
-export default Home;
+export default Search;

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Worker, Viewer } from "@react-pdf-viewer/core";
 import "@react-pdf-viewer/core/lib/styles/index.css";
 import { defaultLayoutPlugin } from "@react-pdf-viewer/default-layout";
@@ -29,7 +29,7 @@ const BookReader = () => {
         }
 
         const response = await axios.get(
-          `http://127.0.0.1:8000/library/books/${book_id}/download-pdf/`,
+          import.meta.env.VITE_API + `/library/books/${book_id}/download-pdf/`,
           {
             responseType: "blob",
             headers: {

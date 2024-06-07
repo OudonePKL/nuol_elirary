@@ -12,6 +12,8 @@ import ProductDetail from "./components/ProductDetail";
 import Dashboard from "./components/Admin/Dashboard";
 import UploadBook from "./components/UploadBook";
 import BookReader from "./components/BookReader";
+import UploadFileBook from "./components/Admin/ManageBook/UploadFileBook";
+import Search from "./components/Search";
 
 function App() {
   return (
@@ -20,11 +22,13 @@ function App() {
         <Routes>
           {/* Admin page */}
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/upload-book" element={<UploadBook />} />
+          <Route path="/upload-book2" element={<UploadBook />} />
+          <Route path="/upload-book" element={<UploadFileBook />} />
           <Route path="/detail/:id/read" element={<BookReader />} />
           {/* User page */}
           <Route path="/" element={<Home />} />
           <Route path="/detail/:id" element={<ProductDetail />} />
+          <Route path="/search" element={<Search />} />
           {/* Authentications */}
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
