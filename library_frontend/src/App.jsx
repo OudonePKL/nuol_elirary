@@ -13,6 +13,8 @@ import Dashboard from "./components/Admin/Dashboard";
 import UploadBook from "./components/UploadBook";
 import BookReader from "./components/BookReader";
 import UploadFileBook from "./components/Admin/ManageBook/UploadFileBook";
+import CreateCategory from "./components/Admin/ManageCategory/CreateCategory";
+import ListCategory from "./components/Admin/ManageCategory/ListCategory";
 import Search from "./components/Search";
 
 function App() {
@@ -20,11 +22,14 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          {/* Admin page */}
+          {/* Admin page management */}
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/upload-book2" element={<UploadBook />} />
           <Route path="/upload-book" element={<UploadFileBook />} />
           <Route path="/detail/:id/read" element={<BookReader />} />
+          {/* Category management */}
+          <Route path="/category-create" element={<CreateCategory />} />
+          <Route path="/category-list" element={<ListCategory />} />
           {/* User page */}
           <Route path="/" element={<Home />} />
           <Route path="/detail/:id" element={<ProductDetail />} />

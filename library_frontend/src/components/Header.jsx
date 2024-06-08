@@ -111,7 +111,7 @@ function Header() {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
-            <Button variant="primary" className="mr-2">
+            <Button variant="primary" className="mr-2" type="submit">
               Search
             </Button>
           </Form>

@@ -87,6 +87,13 @@ function Dashboard() {
             <span>Upload Book</span>
           </a>
         </li>
+
+        <li className="nav-item">
+          <a className="nav-link" href="/category-list">
+            <i className="fas fa-fw fa-chart-area"></i>
+            <span>Category</span>
+          </a>
+        </li>
       </ul>
       {/* <!-- End of Sidebar --> */}
 

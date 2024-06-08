@@ -20,13 +20,17 @@
     "@react-pdf-viewer/print": "^3.12.0",
     "axios": "^1.6.8",
     "bootstrap": "^5.3.3",
+    "boxicons": "^2.1.4",
     "mdb-react-ui-kit": "^8.0.0",
     "pdfjs-dist": "^3.11.174",
+    "quill": "^2.0.2",
     "react": "^18.2.0",
     "react-bootstrap": "^2.10.2",
     "react-dom": "^18.2.0",
     "react-dotenv": "^0.1.3",
     "react-router-dom": "^6.23.1",
+    "remixicon": "^4.2.0",
+    "simple-datatables": "^9.0.3",
     "styled-components": "^6.1.9"
   },
   "devDependencies": {
