@@ -17,16 +17,16 @@ function Header() {
   const [isLoading, setIsLoading] = useState(true);
   const [cateogries, setCategories] = useState([]);
   const user = JSON.parse(localStorage.getItem("user") || "{}");
-  const [isAdmin, setIsAdmin] = useState(false);
+  // var isAdmin = false;
+  // isAdmin = user.is_admin;
   const navigate = useNavigate();
-  const [searchQuery, setSearchQuery] = useState("");
+  // const [searchQuery, setSearchQuery] = useState("");
 
   const [search, setSearch] = useState(
     new URLSearchParams(window.location.search).get("search") || ""
   );
 
   useEffect(() => {
-    setIsAdmin(!!user.is_admin);
     fetchCategories();
   }, []);
 
@@ -53,11 +53,13 @@ function Header() {
     navigate(`/search/?search=${search}`);
   };
 
-  const handleLogout = () => {
-    localStorage.clear();
-    navigate("/");
-    return;
-  };
+  // const handleLogout = () => {
+  //   localStorage.clear();
+  //   navigate("/");
+  //   return;
+  // };
+
+  console.log(typeof user);
 
   return (
     <div>
@@ -115,30 +117,15 @@ function Header() {
               Search
             </Button>
           </Form>
-          {user ? (
-            <>
-              {isAdmin === true ? (
-                <Button
-                  variant="outline-primary"
-                  className="mr-2"
-                  onClick={() => navigate("/dashboard")}
-                >
-                  Dashboard
-                </Button>
-              ) : (
-                <Button
-                  variant="outline-primary"
-                  className="mr-2"
-                  onClick={() => navigate("/profile")}
-                >
-                  Profile
-                </Button>
-              )}
 
-              {/* <Button variant="outline-danger" onClick={handleLogout}>
-                Logout
-              </Button> */}
-            </>
+          {user.is_admin === true ? (
+            <Button
+              variant="outline-primary"
+              className="mr-2"
+              onClick={() => navigate("/dashboard")}
+            >
+              Dashboard
+            </Button>
           ) : (
             <Button
               variant="outline-primary"

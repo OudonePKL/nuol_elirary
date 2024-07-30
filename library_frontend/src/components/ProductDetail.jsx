@@ -6,7 +6,7 @@ import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import "./styles.css";
-import "./Admin/css/bootstrap.min.css";
+// import "./Admin/css/bootstrap.min.css";
 
 function ProductDetail() {
   let book_id = useParams().id;
@@ -147,11 +147,8 @@ function ProductDetail() {
                 onClick={() => navigate(`/detail/${book.id}`)}
               >
                 <Card className="h-100">
-                  <Card.Img variant="top" src={book.cover} />
-                  <Card.Body>
-                    {/* <Card.Title className="text-truncate">{book.name}</Card.Title> */}
-                    <Card.Text className="text-primary">{book.name}</Card.Text>
-                  </Card.Body>
+                  <Card.Img variant="top" src={book.cover} /> <br />
+                  <Card.Text className="text-primary">{book.name}</Card.Text>
                 </Card>
               </Col>
             ))

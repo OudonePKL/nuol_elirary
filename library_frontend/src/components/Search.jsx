@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import "./styles.css";
-import "./Admin/css/bootstrap.min.css";
+// import "./Admin/css/bootstrap.min.css";
 
 function Search() {
   const [books, setBooks] = useState([]);
